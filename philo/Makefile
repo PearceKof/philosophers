@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 14:48:56 by blaurent          #+#    #+#              #
-#    Updated: 2022/08/15 14:52:12 by blaurent         ###   ########.fr        #
+#    Updated: 2022/08/22 15:40:57 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,10 @@ NAME		= philo
 
 FLAGS		= -Wall -Wextra -Werror
 
-FILES		= 
+FILES		= philosophers.c \
+				utils.c \
+				init.c \
+				
 
 OBJ			= $(FILES:%.c=%.o)
 
