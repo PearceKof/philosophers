@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 14:48:56 by blaurent          #+#    #+#              #
-#    Updated: 2022/08/22 15:40:57 by blaurent         ###   ########.fr        #
+#    Updated: 2022/09/19 21:05:13 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,15 @@ FILES		= philosophers.c \
 				utils.c \
 				init.c \
 				
-
 OBJ			= $(FILES:%.c=%.o)
 
 all: $(OBJ) $(NAME)
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ)
+	gcc -pthread -o $(NAME) $(OBJ)
 
 %.o: %.c
-	gcc -c -lpthread $< -o $@
+	gcc -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

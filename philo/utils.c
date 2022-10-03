@@ -6,21 +6,30 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/08/22 15:39:55 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/03 13:09:40 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	free_philo(t_philo *philo)
+void	ft_putstr_fd(char *s, int fd)
 {
-	if (philo->right)
-		free(philo);
+	size_t	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }
 
-void	error(t_philo *philo)
+void	ft_error(char *error)
 {
-	free_philo(philo);
+	ft_putstr_fd(error, 2);
+	exit(EXIT_FAILURE);
 }
 
 int	ft_atoi(const char *str)
