@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/03 16:22:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/04 17:19:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	fill_table_value(t_dinner *dinner, int ac, char **av)
 {
-	dinner->table->nb_of_philo = ft_atoi(av[1]);
-	dinner->table->time_die = ft_atoi(av[2]);
-	dinner->table->time_eat = ft_atoi(av[3]);
-	dinner->table->time_sleep = ft_atoi(av[4]);
+	dinner->table->number_of_philosopher = ft_atoi(av[1]);
+	dinner->table->time_to_die = ft_atoi(av[2]);
+	dinner->table->time_to_eat = ft_atoi(av[3]);
+	dinner->table->time_to_sleep = ft_atoi(av[4]);
 	dinner->table->waiting = 0;
-	dinner->table->finished = 0;
+	dinner->table->end = 0;
 	if (ac == 6)
 		dinner->table->to_eat = ft_atoi(av[5]);
 	else
 		dinner->table->to_eat = -1;
-	if (dinner->table->nb_of_philo < 1 
-		|| dinner->table->time_die < 1 || dinner->table->time_sleep < 1
-		|| dinner->table->time_eat < 1 || (ac == 6 && dinner->table->to_eat < 1))
+	if (dinner->table->number_of_philosopher < 1 
+		|| dinner->table->time_to_die < 1 || dinner->table->time_to_sleep < 1
+		|| dinner->table->time_to_eat < 1 || (ac == 6 && dinner->table->to_eat < 1))
 			return (1);
 	// printf("%d %d %d %d", table->nb_of_philo, table->time_die, table->time_eat, table->time_sleep);
 	return (0);
@@ -40,11 +40,11 @@ int	init_table(t_dinner *dinner, int ac, char **av)
 	// memset(dinner->table, 0, sizeof(t_table));
 	if (fill_table_value(dinner, ac, av))
 	 {
-		free(dinner->table);
-		free(dinner);
+		// free(dinner->table);
+		// free(dinner);
 		return (1);
 	 }
-	pthread_mutex_init(&dinner->table->mut, NULL);
+	pthread_mutex_init(&dinner->table->write_lock, NULL);
 	return (0);
 }
 
@@ -55,16 +55,17 @@ static int	fill_philo(t_dinner *dinner)
 
 	i = -1;
 	philo = dinner->philo;
-	while (++i < dinner->table->nb_of_philo)
+	while (++i < dinner->table->number_of_philosopher)
 	{
 		// memset(philo, 0, sizeof(t_philo));
 		philo[i].id = i + 1;
+		philo[i].table = dinner->table;
 		philo[i].l_fork = malloc(sizeof(pthread_mutex_t));
 		if (!philo[i].l_fork)
 		{
-			while (i--)
-				free(philo[i].l_fork);
-			free(philo);
+			// while (i--)
+			// 	free(philo[i].l_fork);
+			// free(philo);
 			return (1);
 		}
 		pthread_mutex_init(philo[i].l_fork, NULL);
@@ -82,9 +83,7 @@ int	init_philo(t_dinner *dinner, int nb_philo)
 		return (1);
 	dinner->philo = philo;
 	if (fill_philo(dinner))
-	{
 		return (1);
-	}
 	i = -1;
 	while(++i < nb_philo)
 	{

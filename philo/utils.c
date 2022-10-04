@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/03 13:09:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/04 15:23:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,37 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-void	ft_error(char *error)
+void	free_all(t_dinner *dinner)
 {
-	ft_putstr_fd(error, 2);
-	exit(EXIT_FAILURE);
+	int	i;
+
+	if (dinner)
+	{
+		if (dinner->philo)
+		{
+			i = 0;
+			while (i < dinner->table->number_of_philosopher)
+			{
+				pthread_mutex_destroy(dinner->philo[i].l_fork);
+				free(dinner->philo[i++].l_fork);
+			}
+			free(dinner->philo);
+		}
+		if (dinner->table)
+			free(dinner->table);
+		free(dinner);
+	}
+}
+
+void	quit(char *error, t_dinner *dinner)
+{
+	free_all(dinner);
+	if (error)
+	{
+		ft_putstr_fd(error, 2);
+		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_SUCCESS);
 }
 
 int	ft_atoi(const char *str)
@@ -59,4 +86,12 @@ int	ft_atoi(const char *str)
 			return (0);
 	}
 	return (value * neg);
+}
+
+time_t	get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
