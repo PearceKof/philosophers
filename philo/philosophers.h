@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/04 17:29:11 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:49:12 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_table
 	int		to_eat;
 	int		eating;
 	int		end;
-	int		waiting;
+	int		dinner_started;
 	time_t	time_to_die;
 	time_t	time_to_eat;
 	time_t	time_to_sleep;
@@ -71,5 +71,7 @@ void	*philosopher(void *data);
 int		ft_atoi(const char *str);
 void	quit(char *error, t_dinner *dinner);
 time_t	get_time(void);
-
+long int	ft_timestamp(t_philo *philo);
+void	print_state(t_philo *philo, char *s);
+void	ft_usleep(t_table *table, long int time_in_ms);
 #endif

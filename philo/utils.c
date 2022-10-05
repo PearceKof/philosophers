@@ -6,11 +6,18 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/04 15:23:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:47:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	print_state(t_philo *philo, char *s)
+{
+	pthread_mutex_lock(&philo->table->write_lock);
+	printf("%ld %d %s\n", ft_timestamp(philo), philo->id, s);
+	pthread_mutex_unlock(&philo->table->write_lock);
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -94,4 +101,21 @@ time_t	get_time(void)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+long int	ft_timestamp(t_philo *philo)
+{
+	long int	timestamp;
+
+	timestamp = get_time() - philo->table->start_dinner_time;
+	return (timestamp);
+}
+
+void	ft_usleep(t_table *table, time_t time_in_ms)
+{
+	time_t	start_time;
+
+	start_time = get_time();
+	while ((get_time() - start_time) < time_in_ms && table->end == 0)
+		usleep(100);
 }
