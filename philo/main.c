@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/05 16:55:10 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:48:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	main(int ac, char **av)
 		quit("thread failed", dinner);
 	if (create_thread(dinner))
 		quit("simulation failed", dinner);
+	// while (1)
+	// {
+	// 	usleep(1);
+	// }
 	usleep(10000);
+	pthread_join(dinner->death_checker, NULL);
 	quit(NULL, dinner);
 	return (0);
 }

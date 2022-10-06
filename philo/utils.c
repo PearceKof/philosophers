@@ -6,16 +6,16 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/05 16:47:49 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:43:25 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_state(t_philo *philo, char *s)
+void	print_state(t_philo *philo, char *s, char *color)
 {
 	pthread_mutex_lock(&philo->table->write_lock);
-	printf("%ld %d %s\n", ft_timestamp(philo), philo->id, s);
+	printf("%s[%ld] %d %s%s\n", color, ft_timestamp(philo), philo->id, s, NC);
 	pthread_mutex_unlock(&philo->table->write_lock);
 }
 
@@ -117,5 +117,5 @@ void	ft_usleep(t_table *table, time_t time_in_ms)
 
 	start_time = get_time();
 	while ((get_time() - start_time) < time_in_ms && table->end == 0)
-		usleep(100);
+		usleep(10);
 }

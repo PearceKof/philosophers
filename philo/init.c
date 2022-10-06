@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/05 16:50:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:27:37 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ static int	fill_philo(t_dinner *dinner)
 	philo = dinner->philo;
 	while (++i < dinner->table->number_of_philosopher)
 	{
-		// memset(philo, 0, sizeof(t_philo));
 		philo[i].id = i + 1;
+		philo[i].is_dead = 0;
+		philo[i].nb_of_meal = 0;
+		philo[i].ate_enough = 0;
+		philo[i].count_death = 0;
 		philo[i].table = dinner->table;
 		philo[i].l_fork = malloc(sizeof(pthread_mutex_t));
 		if (!philo[i].l_fork)
@@ -84,15 +87,16 @@ int	init_philo(t_dinner *dinner, int nb_philo)
 	dinner->philo = philo;
 	if (fill_philo(dinner))
 		return (1);
-	i = -1;
-	while(++i < nb_philo)
+	i = 0;
+	while(i < nb_philo)
 	{
 		if (nb_philo == 1)
 			philo[i].r_fork = NULL;
-		else if (i != nb_philo - 1)
+		else if (i != (nb_philo - 1))
 			philo[i].r_fork = philo[i + 1].l_fork;
 		else
 			philo[i].r_fork = philo[0].l_fork;
+		i++;
 	}
 	return (0);
 }
