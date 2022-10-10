@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/06 16:45:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:45:40 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_table
 	int		to_eat;
 	int		all_ate_enough;
 	int		end;
+	pthread_mutex_t	end_lock;
 	int		dinner_started;
 	time_t	time_to_die;
 	time_t	time_to_eat;
@@ -47,7 +48,8 @@ typedef struct s_philo
 	int				is_dead;
 	int				nb_of_meal;
 	int				ate_enough;
-	time_t			count_death;
+	time_t			last_meal;
+	pthread_mutex_t	eat_lock;
 	t_table			*table;
 	pthread_t		thread;
 	pthread_mutex_t	*r_fork;
@@ -67,7 +69,7 @@ int		init_table(t_dinner *dinner, int ac, char **av);
 int		init_philo(t_dinner *dinner, int nb_philo);
 void	*death_check(void *data);
 void	*philosopher(void *data);
-
+void	ft_putstr_fd(char *s, int fd);
 int		ft_atoi(const char *str);
 void	quit(char *error, t_dinner *dinner);
 time_t	get_time(void);

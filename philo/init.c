@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/06 15:27:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:58:54 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int	fill_table_value(t_dinner *dinner, int ac, char **av)
 	else
 		dinner->table->to_eat = -1;
 	if (dinner->table->number_of_philosopher < 1 
-		|| dinner->table->time_to_die < 1 || dinner->table->time_to_sleep < 1
-		|| dinner->table->time_to_eat < 1 || (ac == 6 && dinner->table->to_eat < 1))
+		|| dinner->table->time_to_die < 0 || dinner->table->time_to_sleep < 0
+		|| dinner->table->time_to_eat < 0 || (ac == 6 && dinner->table->to_eat < 1))
 			return (1);
 	// printf("%d %d %d %d", table->nb_of_philo, table->time_die, table->time_eat, table->time_sleep);
 	return (0);
@@ -44,6 +44,7 @@ int	init_table(t_dinner *dinner, int ac, char **av)
 		// free(dinner);
 		return (1);
 	 }
+	pthread_mutex_init(&dinner->table->end_lock, NULL);
 	pthread_mutex_init(&dinner->table->write_lock, NULL);
 	return (0);
 }
@@ -61,7 +62,6 @@ static int	fill_philo(t_dinner *dinner)
 		philo[i].is_dead = 0;
 		philo[i].nb_of_meal = 0;
 		philo[i].ate_enough = 0;
-		philo[i].count_death = 0;
 		philo[i].table = dinner->table;
 		philo[i].l_fork = malloc(sizeof(pthread_mutex_t));
 		if (!philo[i].l_fork)
@@ -72,6 +72,7 @@ static int	fill_philo(t_dinner *dinner)
 			return (1);
 		}
 		pthread_mutex_init(philo[i].l_fork, NULL);
+		pthread_mutex_init(&philo[i].eat_lock, NULL);
 	}
 	return (0);
 }

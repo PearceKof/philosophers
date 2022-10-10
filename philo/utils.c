@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/06 16:43:25 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:45:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,6 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 		i++;
 	}
-}
-
-void	free_all(t_dinner *dinner)
-{
-	int	i;
-
-	if (dinner)
-	{
-		if (dinner->philo)
-		{
-			i = 0;
-			while (i < dinner->table->number_of_philosopher)
-			{
-				pthread_mutex_destroy(dinner->philo[i].l_fork);
-				free(dinner->philo[i++].l_fork);
-			}
-			free(dinner->philo);
-		}
-		if (dinner->table)
-			free(dinner->table);
-		free(dinner);
-	}
-}
-
-void	quit(char *error, t_dinner *dinner)
-{
-	free_all(dinner);
-	if (error)
-	{
-		ft_putstr_fd(error, 2);
-		exit(EXIT_FAILURE);
-	}
-	exit(EXIT_SUCCESS);
 }
 
 int	ft_atoi(const char *str)
@@ -117,5 +84,5 @@ void	ft_usleep(t_table *table, time_t time_in_ms)
 
 	start_time = get_time();
 	while ((get_time() - start_time) < time_in_ms && table->end == 0)
-		usleep(10);
+		usleep(1);
 }
