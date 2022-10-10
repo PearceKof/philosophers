@@ -28,7 +28,9 @@ static int	is_philo_dead(t_philo *philo)
 	time = get_time();
 	if ((time - philo->last_meal) >= philo->table->time_to_die)
 	{
+		pthread_mutex_lock(&philo->table->end_lock);
 		philo->table->end = 1;
+		pthread_mutex_unlock(&philo->table->end_lock);
 		// printf("%ld %ld\n", time - philo->last_meal, philo->table->time_to_die);
 		pthread_mutex_lock(&philo->table->write_lock);
 		printf("%s[%ld] %d %s%s\n", RED, ft_timestamp(philo), philo->id, "is dead", NC);
@@ -94,16 +96,16 @@ void	*philosopher(void *data)
 		ft_usleep(philo->table, 1);
 	while (philo->table->end == 0)
 	{
-		if (philo->table->end)
+		if (is_ended(philo->table))
 			return (NULL);
 		philo_eat(philo);
-		if (philo->table->end)
+		if (is_ended(philo->table))
 			return (NULL);
 		philo_sleep(philo);
-		if (philo->table->end)
+		if (is_ended(philo->table))
 			return (NULL);
 		print_state(philo, "is thinking", NC);
-		if (philo->table->end)
+		if (is_ended(philo->table))
 			return (NULL);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 17:26:48 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 17:22:37 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:42:10 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	philo_eat(t_philo *philo)
 {
-	philo->table->dinner_started = 1;
 	if (philo->id % 2)
 		pthread_mutex_lock(philo->l_fork);
 	else

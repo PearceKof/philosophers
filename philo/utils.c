@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 17:45:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:51:16 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	print_state(t_philo *philo, char *s, char *color)
 {
 	pthread_mutex_lock(&philo->table->write_lock);
+	if (is_ended(philo->table))
+	{
+		pthread_mutex_unlock(&philo->table->write_lock);
+		return ;
+	}
 	printf("%s[%ld] %d %s%s\n", color, ft_timestamp(philo), philo->id, s, NC);
 	pthread_mutex_unlock(&philo->table->write_lock);
 }
@@ -77,12 +82,26 @@ long int	ft_timestamp(t_philo *philo)
 	timestamp = get_time() - philo->table->start_dinner_time;
 	return (timestamp);
 }
-
-void	ft_usleep(t_table *table, time_t time_in_ms)
+int	is_ended(t_table *table)
 {
-	time_t	start_time;
+	int i;
 
-	start_time = get_time();
-	while ((get_time() - start_time) < time_in_ms && table->end == 0)
+	i = 0;
+	pthread_mutex_lock(&table->end_lock);
+	if (table->end == 1)
+		i = 1;
+	pthread_mutex_unlock(&table->end_lock);
+	return (i);
+}
+void	ft_usleep(t_table *table, time_t time)
+{
+	time_t	end_time;
+
+	end_time = get_time() + time;
+	while (get_time() < end_time)
+	{
+		if (is_ended(table))
+			break ;
 		usleep(1);
+	}
 }

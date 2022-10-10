@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 17:45:40 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:41:15 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void	quit(char *error, t_dinner *dinner);
 time_t	get_time(void);
 long int	ft_timestamp(t_philo *philo);
 void	print_state(t_philo *philo, char *s, char *color);
-void	ft_usleep(t_table *table, long int time_in_ms);
+void	ft_usleep(t_table *table, long int time);
+int	is_ended(t_table *table);
 #endif
