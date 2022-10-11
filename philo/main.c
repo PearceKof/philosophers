@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 19:05:30 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 20:12:24 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av)
 
 	dinner = NULL;
 	if (ac < 5 || 6 < ac)
-		return (EXIT_FAILURE);
+		quit("Invalid argument", NULL);
 	dinner = malloc(sizeof(t_dinner));
 	if (!dinner)
 		quit("malloc failed", NULL);
