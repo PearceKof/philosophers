@@ -6,13 +6,13 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 14:48:56 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/10 18:54:13 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/11 18:30:22 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 
-FLAGS		= -Wall -Wextra -Werror -g
+FLAGS		= -Wall -Wextra -Werror -pthread
 
 FILES		= main.c \
 				utils.c \
@@ -26,10 +26,10 @@ OBJ			= $(FILES:%.c=%.o)
 all: $(OBJ) $(NAME)
 
 $(NAME): $(OBJ)
-	gcc -pthread -g -o $(NAME) $(OBJ)
+	gcc $(FLAGS) -o $(NAME) $(OBJ)
 
 %.o: %.c
-	gcc -c $< -o $@
+	gcc $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

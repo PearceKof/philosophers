@@ -32,7 +32,7 @@ static int	is_philo_dead(t_philo *philo)
 		philo->table->end = 1;
 		pthread_mutex_unlock(&philo->table->end_lock);
 		pthread_mutex_lock(&philo->table->write_lock);
-		printf("%s[%ld] %d %s%s\n", RED, ft_timestamp(philo), philo->id, "is dead", NC);
+		printf("%s[%ld] %d is dead%s\n", RED, get_time() - philo->table->start_dinner_time, philo->id, NC);
 		pthread_mutex_unlock(&philo->table->write_lock);
 		pthread_mutex_unlock(&philo->eat_lock);
 		return (1);
@@ -43,7 +43,7 @@ static int	is_philo_dead(t_philo *philo)
 static int	is_finished(t_dinner *dinner)
 {
 	int		enough_meal;
-	size_t	i;
+	int	i;
 
 	i = 0;
 	enough_meal = 1;
@@ -76,12 +76,17 @@ void	*death_check(void *data)
 	t_dinner	*dinner;
 
 	dinner = (t_dinner *)data;
+	if (dinner->table->to_eat == 0)
+		return (NULL);
+	pthread_mutex_lock(&dinner->table->end_lock);
+	dinner->table->end = 0;
+	pthread_mutex_unlock(&dinner->table->end_lock);
 	wait_start(dinner->table->start_dinner_time);
 	while (1)
 	{
 		if (is_finished(dinner))
 			return (NULL);
-		// usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -96,18 +101,11 @@ void	*philosopher(void *data)
 	pthread_mutex_unlock(&philo->eat_lock);
 	wait_start(philo->table->start_dinner_time);
 	if (philo->id % 2 == 0)
-		ft_usleep(philo->table, philo->table->time_to_eat);
+		think_routine(philo, 1);
 	while (!is_ended(philo->table))
 	{
-		if (is_ended(philo->table))
-			return (NULL);
 		philo_eat(philo);
-		if (is_ended(philo->table))
-			return (NULL);
-		philo_sleep(philo);
-		if (is_ended(philo->table))
-			return (NULL);
-		print_state(philo, "is thinking", NC);
+		think_routine(philo, 0);
 	}
 	return (NULL);
 }

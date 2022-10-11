@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 16:18:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:17:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_dinner
 	pthread_t	death_checker;
 }	t_dinner;
 
+void	think_routine(t_philo *philo, int silent);
 void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 int		init_table(t_dinner *dinner, int ac, char **av);
