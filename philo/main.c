@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 19:18:19 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:25:49 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	create_thread(t_dinner *dinner)
 	int	i;
 
 	i = 0;
-	dinner->table->start_dinner_time = get_time() + (dinner->table->number_of_philosopher * 2 * 10);
+	dinner->table->start_dinner_time = get_time() + (dinner->table->number_of_philosopher * 50);
 	while (i < dinner->table->number_of_philosopher)
 	{
 		if (pthread_create(&dinner->philo[i].thread, NULL, philosopher, &dinner->philo[i]))
@@ -39,6 +39,7 @@ static void	stop_thread(t_dinner *dinner)
 		pthread_join(dinner->philo[i].thread, NULL);
 		i++;
 	}
+	pthread_join(dinner->death_checker, NULL);
 }
 
 int	main(int ac, char **av)
@@ -47,7 +48,7 @@ int	main(int ac, char **av)
 
 	if (ac < 5 || 6 < ac)
 		return (EXIT_FAILURE);
-	dinner = malloc(sizeof(*dinner));
+	dinner = malloc(sizeof(t_dinner));
 	if (!dinner)
 		quit("malloc failed", NULL);
 	memset(dinner, 0, sizeof(t_dinner));
@@ -58,7 +59,6 @@ int	main(int ac, char **av)
 	if (create_thread(dinner))
 		quit("simulation failed", dinner);
 	stop_thread(dinner);
-	pthread_join(dinner->death_checker, NULL);
 	quit(NULL, dinner);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 19:51:16 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:03:41 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ long int	ft_timestamp(t_philo *philo)
 	timestamp = get_time() - philo->table->start_dinner_time;
 	return (timestamp);
 }
+
 int	is_ended(t_table *table)
 {
 	int i;
@@ -93,6 +94,7 @@ int	is_ended(t_table *table)
 	pthread_mutex_unlock(&table->end_lock);
 	return (i);
 }
+
 void	ft_usleep(t_table *table, time_t time)
 {
 	time_t	end_time;
