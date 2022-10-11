@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 19:41:15 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:18:42 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_table
 	int		all_ate_enough;
 	int		end;
 	pthread_mutex_t	end_lock;
-	int		dinner_started;
 	time_t	time_to_die;
 	time_t	time_to_eat;
 	time_t	time_to_sleep;
@@ -45,7 +44,6 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int				id;
-	int				is_dead;
 	int				nb_of_meal;
 	int				ate_enough;
 	time_t			last_meal;

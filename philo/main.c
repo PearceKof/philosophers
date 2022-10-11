@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 15:25:49 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:57:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	create_thread(t_dinner *dinner)
 	int	i;
 
 	i = 0;
-	dinner->table->start_dinner_time = get_time() + (dinner->table->number_of_philosopher * 50);
+	dinner->table->start_dinner_time = get_time() + (dinner->table->number_of_philosopher * 20);
 	while (i < dinner->table->number_of_philosopher)
 	{
 		if (pthread_create(&dinner->philo[i].thread, NULL, philosopher, &dinner->philo[i]))
@@ -25,7 +25,7 @@ int	create_thread(t_dinner *dinner)
 		i++;
 	}
 	if (pthread_create(&dinner->death_checker, NULL, death_check, dinner))
-		quit("thread failed", dinner);
+		return (1);
 	return (0);
 }
 
@@ -51,7 +51,8 @@ int	main(int ac, char **av)
 	dinner = malloc(sizeof(t_dinner));
 	if (!dinner)
 		quit("malloc failed", NULL);
-	memset(dinner, 0, sizeof(t_dinner));
+	dinner->table = NULL;
+	dinner->philo = NULL;
 	if (init_table(dinner, ac, av))
 		quit("init table failed", dinner);
 	if (init_philo(dinner, dinner->table->number_of_philosopher))

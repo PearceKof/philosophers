@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/10 17:58:54 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:23:18 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	fill_table_value(t_dinner *dinner, int ac, char **av)
 	dinner->table->time_to_die = ft_atoi(av[2]);
 	dinner->table->time_to_eat = ft_atoi(av[3]);
 	dinner->table->time_to_sleep = ft_atoi(av[4]);
-	dinner->table->dinner_started = 0;
+	dinner->table->start_dinner_time = 0;
 	dinner->table->end = 0;
 	if (ac == 6)
 		dinner->table->to_eat = ft_atoi(av[5]);
@@ -37,7 +37,7 @@ int	init_table(t_dinner *dinner, int ac, char **av)
 	dinner->table = malloc(sizeof(t_table));
 	if (!dinner->table)
 		return (1);
-	// memset(dinner->table, 0, sizeof(t_table));
+	memset(dinner->table, 0, sizeof(t_table));
 	if (fill_table_value(dinner, ac, av))
 	 {
 		// free(dinner->table);
@@ -59,7 +59,6 @@ static int	fill_philo(t_dinner *dinner)
 	while (++i < dinner->table->number_of_philosopher)
 	{
 		philo[i].id = i + 1;
-		philo[i].is_dead = 0;
 		philo[i].nb_of_meal = 0;
 		philo[i].ate_enough = 0;
 		philo[i].table = dinner->table;
