@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 14:48:56 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/11 18:30:22 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/12 16:18:24 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ FILES		= main.c \
 				utils.c \
 				init.c \
 				thread.c \
-				action.c \
+				philosophers.c \
 				exit.c \
+				time.c
 				
 OBJ			= $(FILES:%.c=%.o)
 

@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 20:12:24 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:52:03 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	create_thread(t_dinner *dinner)
+static int	create_thread(t_dinner *dinner)
 {
 	int	i;
 
@@ -35,11 +35,32 @@ static void	stop_thread(t_dinner *dinner)
 
 	i = 0;
 	while (i < dinner->table->number_of_philosopher)
+		pthread_join(dinner->philo[i++].thread, NULL);
+	pthread_join(dinner->death_checker, NULL);
+}
+
+static int	is_valid_arg(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	if (ac < 5 || 6 < ac)
+		return (0);
+	i = 1;
+	while (i < ac)
 	{
-		pthread_join(dinner->philo[i].thread, NULL);
+		j = 0;
+		while(av[i][j])
+		{
+			if (j == 0 && av[i][j] == '+')
+				j++;
+			if ((av[i][j] < 48 || 57 < av[i][j]))
+				return (0);
+			j++;
+		}
 		i++;
 	}
-	pthread_join(dinner->death_checker, NULL);
+	return (1);
 }
 
 int	main(int ac, char **av)
@@ -47,20 +68,18 @@ int	main(int ac, char **av)
 	t_dinner	*dinner;
 
 	dinner = NULL;
-	if (ac < 5 || 6 < ac)
-		quit("Invalid argument", NULL);
+	if (!is_valid_arg(ac, av))
+		quit("Invalid argument\n", NULL);
 	dinner = malloc(sizeof(t_dinner));
 	if (!dinner)
-		quit("malloc failed", NULL);
-	dinner->table = NULL;
-	dinner->philo = NULL;
+		quit("malloc failed\n", NULL);
+	memset(dinner, 0, sizeof(t_dinner));
 	if (init_table(dinner, ac, av))
-		quit("init table failed", dinner);
+		quit("init table failed\n", dinner);
 	if (init_philo(dinner, dinner->table->number_of_philosopher))
-		quit("init philo failed", dinner);
+		quit("init philo failed\n", dinner);
 	if (create_thread(dinner))
-		quit("simulation failed", dinner);
+		quit("threads creation failed\n", dinner);
 	stop_thread(dinner);
 	quit(NULL, dinner);
-	return (0);
 }

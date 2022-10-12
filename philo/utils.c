@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 18:28:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:17:35 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,6 @@ int	ft_atoi(const char *str)
 	return (value * neg);
 }
 
-time_t	get_time(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-long int	ft_timestamp(t_philo *philo)
-{
-	long int	timestamp;
-
-	timestamp = get_time() - philo->table->start_dinner_time;
-	return (timestamp);
-}
-
 int	is_ended(t_table *table)
 {
 	int i;
@@ -94,17 +78,4 @@ int	is_ended(t_table *table)
 		i = 1;
 	pthread_mutex_unlock(&table->end_lock);
 	return (i);
-}
-
-void	ft_usleep(t_table *table, time_t time)
-{
-	time_t	end_time;
-
-	end_time = get_time() + time;
-	while (get_time() < end_time)
-	{
-		if (is_ended(table))
-			break ;
-		usleep(100);
-	}
 }

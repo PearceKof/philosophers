@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 17:44:21 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 16:27:45 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:20:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	free_all(t_dinner *dinner)
+static void	free_all(t_dinner *dinner)
 {
 	int	i;
 

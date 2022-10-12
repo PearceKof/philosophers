@@ -12,15 +12,6 @@
 
 #include "philosophers.h"
 
-static void	wait_start(time_t start_dinner_time)
-{
-	while (1)
-	{
-		if (get_time() > start_dinner_time)
-			break ;
-	}
-}
-
 static int	is_philo_dead(t_philo *philo)
 {
 	time_t	time;
@@ -87,25 +78,6 @@ void	*death_check(void *data)
 		if (is_finished(dinner))
 			return (NULL);
 		usleep(1000);
-	}
-	return (NULL);
-}
-
-void	*philosopher(void *data)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)data;
-	pthread_mutex_lock(&philo->eat_lock);
-	philo->last_meal = philo->table->start_dinner_time;
-	pthread_mutex_unlock(&philo->eat_lock);
-	wait_start(philo->table->start_dinner_time);
-	if (philo->id % 2 == 0)
-		think_routine(philo, 1);
-	while (!is_ended(philo->table))
-	{
-		philo_eat(philo);
-		think_routine(philo, 0);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/11 17:17:42 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:22:33 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,21 @@ typedef struct s_dinner
 	pthread_t	death_checker;
 }	t_dinner;
 
-void	think_routine(t_philo *philo, int silent);
-void	philo_eat(t_philo *philo);
-void	philo_sleep(t_philo *philo);
+void	quit(char *error, t_dinner *dinner);
+
 int		init_table(t_dinner *dinner, int ac, char **av);
 int		init_philo(t_dinner *dinner, int nb_philo);
-void	*death_check(void *data);
+
 void	*philosopher(void *data);
+
+void	*death_check(void *data);
+
+time_t	get_time(void);
+void	ft_usleep(t_table *table, long int time);
+void	wait_start(time_t start_dinner_time);
+
 void	ft_putstr_fd(char *s, int fd);
 int		ft_atoi(const char *str);
-void	quit(char *error, t_dinner *dinner);
-time_t	get_time(void);
-long int	ft_timestamp(t_philo *philo);
 void	print_state(t_philo *philo, char *s, char *color);
-void	ft_usleep(t_table *table, long int time);
 int	is_ended(t_table *table);
 #endif
