@@ -6,11 +6,35 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:03:30 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:39:27 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static int	is_valid_arg(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	if (ac < 5 || 6 < ac)
+		return (0);
+	i = 1;
+	while (i < ac)
+	{
+		j = 0;
+		while(av[i][j])
+		{
+			if (j == 0 && av[i][j] == '+')
+				j++;
+			if ((av[i][j] < 48 || 57 < av[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 
 static int	create_thread(t_dinner *dinner)
 {
@@ -37,30 +61,6 @@ static void	stop_thread(t_dinner *dinner)
 	while (i < dinner->table->number_of_philosopher)
 		pthread_join(dinner->philo[i++].thread, NULL);
 	pthread_join(dinner->death_checker, NULL);
-}
-
-static int	is_valid_arg(int ac, char **av)
-{
-	int	i;
-	int	j;
-
-	if (ac < 5 || 6 < ac)
-		return (0);
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while(av[i][j])
-		{
-			if (j == 0 && av[i][j] == '+')
-				j++;
-			if ((av[i][j] < 48 || 57 < av[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
 }
 
 int	main(int ac, char **av)

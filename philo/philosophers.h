@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:35:32 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:57:39 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <pthread.h>
 # include <string.h>
+
 #define NC	"\e[0m"
 #define YELLOW	"\e[33m"
 #define BYELLOW	"\e[35m"

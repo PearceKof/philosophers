@@ -6,11 +6,25 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:35:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:30:20 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:39:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	*philo_alone(t_philo *philo)
+{
+	while (!dinner_stopped(philo->table))
+	{
+		pthread_mutex_lock(philo->l_fork);
+		print_state(philo, "has taken a fork (1)", YELLOW);
+		pthread_mutex_unlock(philo->l_fork);
+		print_state(philo, "is sleeping", BYELLOW);
+		ft_usleep(philo->table, philo->table->time_to_sleep);
+		print_state(philo, "is thinking", NC);
+	}
+	return (NULL);
+}
 
 static void	philo_eat(t_philo *philo)
 {
@@ -51,20 +65,6 @@ static void	philo_think(t_philo *philo)
 		time_to_think = 500;
 	print_state(philo, "is thinking", NC);
 	ft_usleep(philo->table, time_to_think);
-}
-
-static void	*philo_alone(t_philo *philo)
-{
-	while (!dinner_stopped(philo->table))
-	{
-		pthread_mutex_lock(philo->l_fork);
-		print_state(philo, "has taken a fork (1)", YELLOW);
-		pthread_mutex_unlock(philo->l_fork);
-		print_state(philo, "is sleeping", BYELLOW);
-		ft_usleep(philo->table, philo->table->time_to_sleep);
-		print_state(philo, "is thinking", NC);
-	}
-	return (NULL);
 }
 
 void	*philosopher(void *data)
