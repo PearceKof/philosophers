@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 14:41:34 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:04:51 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	init_table(t_dinner *dinner, int ac, char **av)
 		return (1);
 	memset(dinner->table, 0, sizeof(t_table));
 	if (fill_table_value(dinner, ac, av))
-		return (1);
+		quit("Invalid argument\n", dinner);
 	pthread_mutex_init(&dinner->table->end_lock, NULL);
 	pthread_mutex_init(&dinner->table->write_lock, NULL);
 	return (0);

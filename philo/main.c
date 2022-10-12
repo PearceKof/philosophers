@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 16:52:03 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:03:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	main(int ac, char **av)
 {
 	t_dinner	*dinner;
 
-	dinner = NULL;
 	if (!is_valid_arg(ac, av))
 		quit("Invalid argument\n", NULL);
 	dinner = malloc(sizeof(t_dinner));
@@ -75,7 +74,7 @@ int	main(int ac, char **av)
 		quit("malloc failed\n", NULL);
 	memset(dinner, 0, sizeof(t_dinner));
 	if (init_table(dinner, ac, av))
-		quit("init table failed\n", dinner);
+		quit("Init table failed\n", dinner);
 	if (init_philo(dinner, dinner->table->number_of_philosopher))
 		quit("init philo failed\n", dinner);
 	if (create_thread(dinner))
