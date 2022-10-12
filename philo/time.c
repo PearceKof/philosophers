@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:35:25 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 16:22:05 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:27:35 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_usleep(t_table *table, time_t time)
 	end_time = get_time() + time;
 	while (get_time() < end_time)
 	{
-		if (is_ended(table))
+		if (dinner_stopped(table))
 			break ;
 		usleep(100);
 	}

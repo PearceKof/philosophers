@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 16:22:33 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:35:32 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void	wait_start(time_t start_dinner_time);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_atoi(const char *str);
 void	print_state(t_philo *philo, char *s, char *color);
-int	is_ended(t_table *table);
+int		dinner_stopped(t_table *table);
+
 #endif
