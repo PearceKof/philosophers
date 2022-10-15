@@ -23,7 +23,7 @@ static int	is_philo_dead(t_philo *philo)
 		philo->table->end = 1;
 		pthread_mutex_unlock(&philo->table->end_lock);
 		pthread_mutex_lock(&philo->table->write_lock);
-		printf("%s[%ld] %d is dead%s\n", RED, get_time() - philo->table->start_dinner_time, philo->id, NC);
+		printf("%ld %d died\n", get_time() - philo->table->start_dinner_time, philo->id);
 		pthread_mutex_unlock(&philo->table->write_lock);
 		pthread_mutex_unlock(&philo->eat_lock);
 		return (1);
@@ -31,9 +31,9 @@ static int	is_philo_dead(t_philo *philo)
 	return (0);
 }
 
-static int	is_finished(t_dinner *dinner)
+static int	end_condition(t_dinner *dinner)
 {
-	int		enough_meal;
+	int	enough_meal;
 	int	i;
 
 	i = 0;
@@ -45,7 +45,7 @@ static int	is_finished(t_dinner *dinner)
 			return (1);
 		if (dinner->table->to_eat != -1)
 		{
-			if (dinner->philo->nb_of_meal < dinner->table->to_eat)
+			if (dinner->philo[i].nb_of_meal < dinner->table->to_eat)
 				enough_meal = 0;
 		}
 		pthread_mutex_unlock(&dinner->philo[i].eat_lock);
@@ -55,7 +55,10 @@ static int	is_finished(t_dinner *dinner)
 	{
 		if (enough_meal)
 		{
-			print_state(dinner->philo, "ate enough", RED);
+			print_state(dinner->philo, "ate enough");
+			pthread_mutex_lock(&dinner->table->end_lock);
+			dinner->table->end = 1;
+			pthread_mutex_unlock(&dinner->table->end_lock);
 			return (1);
 		}
 	}
@@ -75,7 +78,7 @@ void	*death_check(void *data)
 	wait_start(dinner->table->start_dinner_time);
 	while (1)
 	{
-		if (is_finished(dinner))
+		if (end_condition(dinner))
 			return (NULL);
 		usleep(1000);
 	}

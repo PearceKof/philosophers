@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:39:27 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:43:58 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	is_valid_arg(int ac, char **av)
 	while (i < ac)
 	{
 		j = 0;
+		if (av[i][0] == '\0')
+			return (0);
 		while(av[i][j])
 		{
 			if (j == 0 && av[i][j] == '+')
@@ -55,7 +57,7 @@ static int	create_thread(t_dinner *dinner)
 
 static void	stop_thread(t_dinner *dinner)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < dinner->table->number_of_philosopher)

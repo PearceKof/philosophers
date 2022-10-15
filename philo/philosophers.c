@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:35:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:39:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:50:14 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	*philo_alone(t_philo *philo)
 	while (!dinner_stopped(philo->table))
 	{
 		pthread_mutex_lock(philo->l_fork);
-		print_state(philo, "has taken a fork (1)", YELLOW);
+		print_state(philo, "has taken a fork");
 		pthread_mutex_unlock(philo->l_fork);
-		print_state(philo, "is sleeping", BYELLOW);
+		print_state(philo, "is sleeping");
 		ft_usleep(philo->table, philo->table->time_to_sleep);
-		print_state(philo, "is thinking", NC);
+		print_state(philo, "is thinking");
 	}
 	return (NULL);
 }
@@ -32,20 +32,22 @@ static void	philo_eat(t_philo *philo)
 		pthread_mutex_lock(philo->l_fork);
 	else
 		pthread_mutex_lock(philo->r_fork);
-	print_state(philo, "has taken a fork (1)", YELLOW);
+	print_state(philo, "has taken a fork");
 	if (philo->id % 2)
 		pthread_mutex_lock(philo->r_fork);
 	else
 		pthread_mutex_lock(philo->l_fork);
-	print_state(philo, "has taken a fork (2)", YELLOW);
-	print_state(philo, "is eating", GREEN);
+	print_state(philo, "has taken a fork");
+	print_state(philo, "is eating");
 	pthread_mutex_lock(&philo->eat_lock);
 	philo->last_meal = get_time();
+	if (philo->table->to_eat != -1)
+		philo->nb_of_meal++;
 	pthread_mutex_unlock(&philo->eat_lock);
 	ft_usleep(philo->table, philo->table->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
-	print_state(philo, "is sleeping", BYELLOW);
+	print_state(philo, "is sleeping");
 	ft_usleep(philo->table, philo->table->time_to_sleep);
 }
 
@@ -63,7 +65,7 @@ static void	philo_think(t_philo *philo)
 		time_to_think = 0;
 	if (time_to_think > 500)
 		time_to_think = 500;
-	print_state(philo, "is thinking", NC);
+	print_state(philo, "is thinking");
 	ft_usleep(philo->table, time_to_think);
 }
 

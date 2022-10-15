@@ -6,13 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:41:50 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:48:46 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_state(t_philo *philo, char *s, char *color)
+void	print_state(t_philo *philo, char *s)
 {
 	pthread_mutex_lock(&philo->table->write_lock);
 	if (dinner_stopped(philo->table))
@@ -20,8 +20,7 @@ void	print_state(t_philo *philo, char *s, char *color)
 		pthread_mutex_unlock(&philo->table->write_lock);
 		return ;
 	}
-	printf("%s[%ld] %d %s%s\n", color,
-		get_time() - philo->table->start_dinner_time, philo->id, s, NC);
+	printf("%ld %d %s\n", get_time() - philo->table->start_dinner_time, philo->id, s);
 	pthread_mutex_unlock(&philo->table->write_lock);
 }
 

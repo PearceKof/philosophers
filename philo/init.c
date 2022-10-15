@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:04:51 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:58:19 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ int	init_table(t_dinner *dinner, int ac, char **av)
 
 static int	fill_philo(t_dinner *dinner)
 {
-	int			i;
+	int		i;
 	t_philo	*philo;
 
 	i = -1;
 	philo = dinner->philo;
 	while (++i < dinner->table->number_of_philosopher)
 	{
+		memset(&philo[i], 0, (sizeof(t_philo)));
 		philo[i].id = i + 1;
 		philo[i].nb_of_meal = 0;
 		philo[i].ate_enough = 0;
@@ -66,7 +67,7 @@ static int	fill_philo(t_dinner *dinner)
 
 int	init_philo(t_dinner *dinner, int nb_philo)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo) * nb_philo);
