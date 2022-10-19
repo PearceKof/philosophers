@@ -6,14 +6,13 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/19 13:58:12 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:35:07 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include <pthread.h>
 # include <sys/time.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -40,9 +39,9 @@ typedef struct s_philo
 	int				id;
 	int				nb_of_meal;
 	time_t			last_meal;
-	pthread_mutex_t	eat_lock;
 	t_table			*table;
 	pthread_t		thread;
+	pthread_mutex_t	eat_lock;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 }	t_philo;
