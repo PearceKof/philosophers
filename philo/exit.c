@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 17:44:21 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 16:20:32 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:53:52 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ static void	free_all(t_dinner *dinner)
 		if (dinner->philo)
 		{
 			i = 0;
-			while (i < dinner->table->number_of_philosopher)
+			while (i < dinner->table->nb_of_philo)
 			{
 				pthread_mutex_destroy(&dinner->philo[i].eat_lock);
 				pthread_mutex_destroy(dinner->philo[i].l_fork);
-				
 				free(dinner->philo[i++].l_fork);
 			}
 			free(dinner->philo);
@@ -37,7 +36,6 @@ static void	free_all(t_dinner *dinner)
 		free(dinner);
 	}
 }
-
 
 void	quit(char *error, t_dinner *dinner)
 {

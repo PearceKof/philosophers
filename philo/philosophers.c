@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:35:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/15 18:50:14 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:55:02 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void	*philosopher(void *data)
 
 	philo = (t_philo *)data;
 	pthread_mutex_lock(&philo->eat_lock);
-	philo->last_meal = philo->table->start_dinner_time;
+	philo->last_meal = philo->table->dinner_start;
 	pthread_mutex_unlock(&philo->eat_lock);
-	wait_start(philo->table->start_dinner_time);
-	if (philo->table->number_of_philosopher == 1)
+	wait_start(philo->table->dinner_start);
+	if (philo->table->nb_of_philo == 1)
 		return (philo_alone(philo));
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->table, (philo->table->time_to_eat / 2));

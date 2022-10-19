@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 14:44:04 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/15 18:43:58 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:57:35 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	is_valid_arg(int ac, char **av)
 		j = 0;
 		if (av[i][0] == '\0')
 			return (0);
-		while(av[i][j])
+		while (av[i][j])
 		{
 			if (j == 0 && av[i][j] == '+')
 				j++;
@@ -41,12 +41,15 @@ static int	is_valid_arg(int ac, char **av)
 static int	create_thread(t_dinner *dinner)
 {
 	int	i;
+	int	delay;
 
+	delay = dinner->table->nb_of_philo * 10;
+	dinner->table->dinner_start = get_time() + delay;
 	i = 0;
-	dinner->table->start_dinner_time = get_time() + (dinner->table->number_of_philosopher * 10);
-	while (i < dinner->table->number_of_philosopher)
+	while (i < dinner->table->nb_of_philo)
 	{
-		if (pthread_create(&dinner->philo[i].thread, NULL, philosopher, &dinner->philo[i]))
+		if (pthread_create
+			(&dinner->philo[i].thread, NULL, philosopher, &dinner->philo[i]))
 			return (1);
 		i++;
 	}
@@ -60,7 +63,7 @@ static void	stop_thread(t_dinner *dinner)
 	int	i;
 
 	i = 0;
-	while (i < dinner->table->number_of_philosopher)
+	while (i < dinner->table->nb_of_philo)
 		pthread_join(dinner->philo[i++].thread, NULL);
 	pthread_join(dinner->death_checker, NULL);
 }
@@ -77,7 +80,7 @@ int	main(int ac, char **av)
 	memset(dinner, 0, sizeof(t_dinner));
 	if (init_table(dinner, ac, av))
 		quit("Init table failed\n", dinner);
-	if (init_philo(dinner, dinner->table->number_of_philosopher))
+	if (init_philo(dinner, dinner->table->nb_of_philo))
 		quit("init philo failed\n", dinner);
 	if (create_thread(dinner))
 		quit("threads creation failed\n", dinner);

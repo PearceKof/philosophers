@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 14:22:19 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/15 18:48:46 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:05:29 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_state(t_philo *philo, char *s)
 		pthread_mutex_unlock(&philo->table->write_lock);
 		return ;
 	}
-	printf("%ld %d %s\n", get_time() - philo->table->start_dinner_time, philo->id, s);
+	printf("%ld %d %s\n", get_time() - philo->table->dinner_start, philo->id, s);
 	pthread_mutex_unlock(&philo->table->write_lock);
 }
 
@@ -67,7 +67,7 @@ int	ft_atoi(const char *str)
 
 int	dinner_stopped(t_table *table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_lock(&table->end_lock);

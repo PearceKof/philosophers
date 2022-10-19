@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/15 18:48:02 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:58:12 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,16 @@
 # include <pthread.h>
 # include <string.h>
 
-#define NC	"\e[0m"
-#define YELLOW	"\e[33m"
-#define BYELLOW	"\e[35m"
-#define RED	"\e[31m"
-#define GREEN	"\e[32m"
-
 typedef struct s_table
 {
-	int		number_of_philosopher;
-	int		to_eat;
-	int		all_ate_enough;
-	int		end;
+	int				nb_of_philo;
+	int				to_eat;
+	int				end;
+	time_t			time_to_die;
+	time_t			time_to_eat;
+	time_t			time_to_sleep;
+	time_t			dinner_start;
 	pthread_mutex_t	end_lock;
-	time_t	time_to_die;
-	time_t	time_to_eat;
-	time_t	time_to_sleep;
-	time_t	start_dinner_time;
 	pthread_mutex_t	write_lock;
 }	t_table;
 
@@ -46,7 +39,6 @@ typedef struct s_philo
 {
 	int				id;
 	int				nb_of_meal;
-	int				ate_enough;
 	time_t			last_meal;
 	pthread_mutex_t	eat_lock;
 	t_table			*table;
