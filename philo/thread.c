@@ -28,7 +28,8 @@ static int	is_philo_dead(t_philo *philo)
 	{
 		set_end(philo->table);
 		pthread_mutex_lock(&philo->table->write_lock);
-		print_state(philo, "died");
+		printf("%ld %d died\n",
+			get_time() - philo->table->dinner_start, philo->id);
 		pthread_mutex_unlock(&philo->table->write_lock);
 		pthread_mutex_unlock(&philo->eat_lock);
 		return (1);
