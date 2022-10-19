@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/19 13:54:06 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:03:01 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	fill_table_value(t_dinner *dinner, int ac, char **av)
 {
+	dinner->table->end = 0;
+	dinner->table->to_eat = -1;
 	dinner->table->nb_of_philo = ft_atoi(av[1]);
 	dinner->table->time_to_die = ft_atoi(av[2]);
 	dinner->table->time_to_eat = ft_atoi(av[3]);
 	dinner->table->time_to_sleep = ft_atoi(av[4]);
-	dinner->table->to_eat = -1;
-	dinner->table->end = 0;
 	if (ac == 6)
 		dinner->table->to_eat = ft_atoi(av[5]);
 	if (dinner->table->nb_of_philo < 1
 		|| dinner->table->time_to_die < 0
 		|| dinner->table->time_to_sleep < 0
 		|| dinner->table->time_to_eat < 0
-		|| (ac == 6 && dinner->table->to_eat < 1))
+		|| (ac == 6 && dinner->table->to_eat < 0))
 		return (1);
 	return (0);
 }

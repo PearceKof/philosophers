@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 14:51:23 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/19 14:35:07 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/19 14:59:44 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 typedef struct s_table
 {
-	int				nb_of_philo;
-	int				to_eat;
 	int				end;
+	int				to_eat;
+	int				nb_of_philo;
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
