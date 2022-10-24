@@ -6,13 +6,13 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 14:48:56 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/24 14:33:47 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/24 15:18:45 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
 
-FLAGS		= -Wall -Wextra -Werror -pthread -fsanitize=thread -g3
+FLAGS		= -Wall -Wextra -Werror -pthread
 
 FILES		= main.c \
 				utils.c \
