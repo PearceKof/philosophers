@@ -6,7 +6,7 @@
 #    By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/15 14:48:56 by blaurent          #+#    #+#              #
-#    Updated: 2022/10/19 15:52:42 by blaurent         ###   ########.fr        #
+#    Updated: 2022/10/24 13:03:51 by blaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAGS		= -Wall -Wextra -Werror -pthread -g
 FILES		= main.c \
 				utils.c \
 				init.c \
-				thread.c \
+				death_check.c \
 				philosophers.c \
 				exit.c \
 				time.c

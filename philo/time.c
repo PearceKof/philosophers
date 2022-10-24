@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:35:25 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/12 17:27:35 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:03:18 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	ft_usleep(t_table *table, time_t time)
 	}
 }
 
-void	wait_start(time_t start_dinner_time)
+void	wait_start(time_t start_time)
 {
 	while (1)
 	{
-		if (get_time() > start_dinner_time)
+		if (get_time() > start_time)
 			break ;
 	}
 }
