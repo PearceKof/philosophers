@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 14:35:47 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/19 15:28:43 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:45:30 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static void	philo_eat(t_philo *philo)
 	ft_usleep(philo->table, philo->table->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
-	print_state(philo, "is sleeping");
-	ft_usleep(philo->table, philo->table->time_to_sleep);
 }
 
 static void	philo_think(t_philo *philo)
@@ -90,6 +88,8 @@ void	*philosopher(void *data)
 	while (!dinner_stopped(philo->table))
 	{
 		philo_eat(philo);
+		print_state(philo, "is sleeping");
+		ft_usleep(philo->table, philo->table->time_to_sleep);
 		philo_think(philo);
 	}
 	return (NULL);
