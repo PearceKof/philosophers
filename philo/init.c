@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 15:36:18 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/19 15:03:01 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:49:06 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	init_table(t_dinner *dinner, int ac, char **av)
 	if (!dinner->table)
 		return (1);
 	memset(dinner->table, 0, sizeof(t_table));
+	printf("%p\n", &dinner->table->end_lock);
 	if (fill_table_value(dinner, ac, av))
 		quit("Invalid argument\n", dinner);
 	pthread_mutex_init(&dinner->table->end_lock, NULL);
@@ -59,7 +60,12 @@ static int	fill_philo(t_dinner *dinner)
 		philo[i].table = dinner->table;
 		philo[i].l_fork = malloc(sizeof(pthread_mutex_t));
 		if (!philo[i].l_fork)
+		{
+			while (i--)
+				free(philo[i].l_fork);
+			free(philo);
 			return (1);
+		}
 		pthread_mutex_init(philo[i].l_fork, NULL);
 		pthread_mutex_init(&philo[i].eat_lock, NULL);
 	}

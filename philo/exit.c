@@ -6,7 +6,7 @@
 /*   By: blaurent <blaurent@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 17:44:21 by blaurent          #+#    #+#             */
-/*   Updated: 2022/10/19 13:53:52 by blaurent         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:44:45 by blaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ static void	free_all(t_dinner *dinner)
 			}
 			free(dinner->philo);
 		}
-		pthread_mutex_destroy(&dinner->table->end_lock);
-		pthread_mutex_destroy(&dinner->table->write_lock);
 		if (dinner->table)
+		{
+			pthread_mutex_destroy(&dinner->table->end_lock);
+			pthread_mutex_destroy(&dinner->table->write_lock);
 			free(dinner->table);
+		}
 		free(dinner);
 	}
 }
