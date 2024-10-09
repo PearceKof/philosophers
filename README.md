@@ -44,10 +44,12 @@ To build and run Philosophers, you need a C compiler and `make`. This program is
 ```
 git clone https://github.com/yourusername/philosophers.git
 ```
+
+2. Go in the cloned repository:
+
 ```
 cd philosophers
 ```
-
 
 3. Build the project:
 
