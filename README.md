@@ -68,7 +68,7 @@ make
 After building the program, you can start it by running:
 
 ```
-./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat OPTIONAL]
+./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_they_must_eat !OPTIONAL!]
 ```
 ```
 ./philo 10 1000 200 300 5
